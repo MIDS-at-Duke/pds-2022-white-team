@@ -16,6 +16,7 @@
 % \usepackage[document]{ragged2e}
 \usepackage{verbatim, rotating, paralist}
 \usepackage{enumerate}
+\usepackage{float}
 
 \usepackage{natbib}
 
@@ -64,71 +65,130 @@
 \maketitle
 
 \section{Topic:}
-\emph{What problem are you (or your stakeholder) trying to addres?}
-\vspace*{2cm}\\
+
+%\emph{What problem are you (or your stakeholder) trying to addres?}
+
+We want to tackle the problem of the high number of prescription opioids in the United States. 
+\vspace*{1cm}\\
 
 \section{Project Question}
-\emph{What specific question are you seeking to answer with this project?}
-\vspace*{2cm}\\
-
+%emph{What specific question are you seeking to answer with this project?}
+In this project we want to answer the following two specific questions: 
 \begin{itemize}
 \item What is the effect of opioid drug prescription regulations on the volume of opioids prescribed?
 
-\item What is the effect of opioid drug prescription on drug overdose deaths?
+\item What is the effect of opioid drug prescription regulations on drug overdose deaths?
 
 \end{itemize}
 
-
+\vspace*{1cm}
 \section{Project Hypothesis}
-\emph{What is your hypothesized answer to your question?}
-\vspace*{2cm}\\
+%\emph{What is your hypothesized answer to your question?}
 
+The hypothesized answer to the two project questions are:
 \begin{itemize}
 \item Opioid drug prescription regulations decrease the volume of opioids prescribed.
 
 \item Opioid drug prescriptions regulations increase drug overdose deaths in the short to medium run.
 \end{itemize}
 
+\vspace*{1cm}
+
 
 
 
 \section{Model Results}
-\emph{One of the hardest parts of developing a good data science project is developing a question that is actually answerable. Perhaps the best way to figure out if your question is answerable is to see if you can imagine what an answer to your question would look like. Below, draw the graph, regression table, etc. that you would consider to be an answer to your question. Then draw it again, so you have a model result for if your hypothesized answer is true, and a model result for if your hypothesized answer is false. (If the answer to your question is continuous, not discrete (like: what is the level of inequality in the United States), draw it for high values (high inequality) and low values (low inequality)).}
+%\emph{One of the hardest parts of developing a good data science project is developing a question that is actually answerable. Perhaps the best way to figure out if your question is answerable is to see if you can imagine what an answer to your question would look like. Below, draw the graph, regression table, etc. that you would consider to be an answer to your question. Then draw it again, so you have a model result for if your hypothesized answer is true, and a model result for if your hypothesized answer is false. (If the answer to your question is continuous, not discrete (like: what is the level of inequality in the United States), draw it for high values (high inequality) and low values (low inequality)).}
+
+In the final report, the graphics below will be presented separately for two different policy interventions in Florida and Washington. In addition, these graphics will be generated using drug overdose mortality per capita on the y-axis. For that, three distinct policies in Florida, Washington, and Texas will be analyzed. All graphics will include standard error bands.
+
+\newpage
 
 \begin{minipage}{0.5\textwidth}
 \centering
-\textbf{Result if your hypothesis is true}
+\textbf{Result if the hypothesis is true}
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
 \centering
-\textbf{Result if your hypothesis is false}
+\textbf{Result if the hypothesis is false}
 \end{minipage}
-\vspace*{5cm}\\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=.5]{41_project_strategy_potential_model_results_prepost.png}
+    \caption{Potential model results pre-post comparison }
+    \label{fig:prepost}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=.5]{41_project_strategy_potential_model_results_did.png}
+    \caption{Potential model results difference-in-difference comparison }
+    \label{fig:did}
+\end{figure}
+
+
+
+\vspace*{1cm}
 \section{Final Variables Required}
 
-\emph{Now that you've specified what an answer to your question looks like, what data do you need to generate that answer.}
+%\emph{Now that you've specified what an answer to your question looks like, what data do you need to generate that answer.}
 
-\emph{For each variable, define both the variable you need \textbf{and} the population for which you need the variables to be defined.}
+%\emph{For each variable, define both the variable you need \textbf{and} the population for which you need the variables to be defined.}
 
-\emph{You don't have to be too specific (``I need variable 7 from the NHGIS 2019 census 1\% sample release'') -- just define it in the most general terms that are still specific enough to meet your needs (e.g. I need income data for a nationally representative sample of US citizens). }
-\pagebreak
+%\emph{You don't have to be too specific (``I need variable 7 from the NHGIS 2019 census 1\% sample release'') -- just define it in the most general terms that are still specific enough to meet your needs (e.g. I need income data for a nationally representative sample of US citizens). }
+%\pagebreak
+
+A single row in the data will contain one observation for one county for one year. All data should be available before and after the policy intervention. Data is required for both, US counties which are affected by policy intervention and for those which are unaffected. 
+
+\begin{itemize}
+
+\item Opioid drug prescriptions per capita per county per year
+	\begin{itemize}
+	\item Absolute opioid drug prescriptions per county per year
+	\item County population size per year
+	\end{itemize}
+\item Drug overdose mortality numbers per capita per county per year
+	\begin{itemize}
+	\item Absolute drug overdose mortality numbers per county per year
+	\item County population size per year
+	\end{itemize}
+\item Binary variable which indicates whether the observation is in a state with policy change (for Difference-in-Difference)
+
+\item Year
+
+
+
+\end{itemize}
+
 \section{Data Sources}
 
-\emph{Finally, given the variables you need for your analysis, what actual data sources do you think will have the data you need?}
+%\emph{Finally, given the variables you need for your analysis, what actual data sources do you think will have the data you need?}
 
-\emph{In specifying the datasets you need, if you list more than one \textbf{also} indicate how you think you can relate these datasets (i.e. if you're gonna merge them, what variables do you think those datasets will provide that will allow you merge them? There's no use saying ``I'll merge this political survey with medical records of who has received bad care'' if the political survey doesn't provide identifying information you can use to link survey respondents to medical records, even if you have both the survey and medical records!)}
-\vspace*{2cm}\\
+%\emph{In specifying the datasets you need, if you list more than one \textbf{also} indicate how you think you can relate these datasets (i.e. if you're gonna merge them, what variables do you think those datasets will provide that will allow you merge them? There's no use saying ``I'll merge this political survey with medical records of who has received bad care'' if the political survey doesn't provide identifying information you can use to link survey respondents to medical records, even if you have both the survey and medical records!)}
+
+\begin{itemize}
+	\item US Vital Statistics records
+	\item Prescription opioid drug shipments by the Washington Post
+	\item FIPS codes based on a file by the \href{https://www2.census.gov/geo/docs/reference/codes/files/national_county.txt}{US census}
+	\item \href{https://www.census.gov/programs-surveys/popest/data.html}{US census} population data
+\end{itemize}
+
+
+The data sets will be merged based on the county FIPS codes and the year. They are already included in the population data set and the US vital statistics records. Based on the county and state name they will be added to the prescription opioid drug shipment data.
+\vspace*{1cm}
 
 
 \section{Task assignment}
 
 \begin{center}
-\begin{tabular}{ l l l l}
- Step & Detailed tasks & Writes initial code & Reviews code\\ \hline
- Step 1 & & & \\  
- Step 2 & & & \\
- Step 3 & & & \\
- Step 4 & & & \\
+\begin{tabular}{ l | l l}
+\textbf{Step}  & \textbf{Writes initial code} & \textbf{Reviews code}\\ \hline
+ Import data & Fabian & \\  
+ Clean and aggregate data & Fabian & \\
+ Merge data & Zhanyi & Fabian \\
+ Analyze data & Zhanyi & \\
+ Create graphs & & \\
 \end{tabular}
 \end{center}
 
