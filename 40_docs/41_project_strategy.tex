@@ -39,7 +39,7 @@
 
 \usepackage{enumitem}
 \setlist{nosep}
-\author{Chenxi Rong, Xiaoquan Liu, Zhanyi Lin, Fabian Schmid}
+\author{White Team \\ Chenxi Rong, Xiaoquan Liu, Zhanyi Lin, Fabian Schmid}
 
 \renewcommand{\topfraction}{.85}
 \renewcommand{\bottomfraction}{.7}
@@ -58,18 +58,18 @@
 % \renewcommand{\headrulewidth}{0pt}
 
 
-\title{Backwards Design Template}
+\title{Opioid project strategy outline}
 
 %-------------------------- BEGIN DOCUMENT ----------------------------------%
 \begin{document}
 \maketitle
 
-\section{Topic:}
+\section{Topic}
 
 %\emph{What problem are you (or your stakeholder) trying to addres?}
 
-We want to tackle the problem of the high number of prescription opioids in the United States. 
-\vspace*{1cm}\\
+We want to address the problem that a high number of  opioids are prescribed in the United States. This development induces severe consequences like more overdose deaths and opioid addicts over the last twenty years.
+\vspace*{0.5cm}
 
 \section{Project Question}
 %emph{What specific question are you seeking to answer with this project?}
@@ -81,18 +81,20 @@ In this project we want to answer the following two specific questions:
 
 \end{itemize}
 
-\vspace*{1cm}
+For that, we will analyze three policies implemented on the state level in Washington, Texas, and Florida which came into effect between 2007 and 2012. 
+
+\vspace*{0.5cm}
 \section{Project Hypothesis}
 %\emph{What is your hypothesized answer to your question?}
 
-The hypothesized answer to the two project questions are:
+We hypothesize that the answers to the two project questions are:
 \begin{itemize}
 \item Opioid drug prescription regulations decrease the volume of opioids prescribed.
 
-\item Opioid drug prescriptions regulations increase drug overdose deaths in the short to medium run.
+\item Opioid drug prescriptions regulations increase drug overdose deaths in the short to medium run as opioid addicts substitute prescription opioids with more dangerous non-prescription opioids.
 \end{itemize}
 
-\vspace*{1cm}
+\vspace*{0.5cm}
 
 
 
@@ -100,9 +102,8 @@ The hypothesized answer to the two project questions are:
 \section{Model Results}
 %\emph{One of the hardest parts of developing a good data science project is developing a question that is actually answerable. Perhaps the best way to figure out if your question is answerable is to see if you can imagine what an answer to your question would look like. Below, draw the graph, regression table, etc. that you would consider to be an answer to your question. Then draw it again, so you have a model result for if your hypothesized answer is true, and a model result for if your hypothesized answer is false. (If the answer to your question is continuous, not discrete (like: what is the level of inequality in the United States), draw it for high values (high inequality) and low values (low inequality)).}
 
-In the final report, the graphics below will be presented separately for two different policy interventions in Florida and Washington. In addition, these graphics will be generated using drug overdose mortality per capita on the y-axis. For that, three distinct policies in Florida, Washington, and Texas will be analyzed. All graphics will include standard error bands.
+In the final report, the graphics below will be presented separately for two different policy interventions in Florida and Washington. In addition, similar graphics will be generated using drug overdose mortality per capita on the y-axis. For that, three policies in Florida, Washington, and Texas will be analyzed. All graphics will include standard error bands.
 
-\newpage
 
 \begin{minipage}{0.5\textwidth}
 \centering
@@ -139,7 +140,7 @@ In the final report, the graphics below will be presented separately for two dif
 %\emph{You don't have to be too specific (``I need variable 7 from the NHGIS 2019 census 1\% sample release'') -- just define it in the most general terms that are still specific enough to meet your needs (e.g. I need income data for a nationally representative sample of US citizens). }
 %\pagebreak
 
-A single row in the data will contain one observation for one county for one year. All data should be available before and after the policy intervention. Data is required for both, US counties which are affected by policy intervention and for those which are unaffected. 
+A single row in the final data set will contain one observation for one county for one year. All data should be available before and after the policy intervention to conduct the pre-post comparison (Florida February 2010, Texas January 2007, Washington January 2012). For the difference-in-difference approach data is required for both, US counties which are affected by the policy intervention and for those which are unaffected.  The following variables are required in the final data set to conduct the analysis:
 
 \begin{itemize}
 
@@ -153,7 +154,9 @@ A single row in the data will contain one observation for one county for one yea
 	\item Absolute drug overdose mortality numbers per county per year
 	\item County population size per year
 	\end{itemize}
-\item Binary variable which indicates whether the observation is in a state with policy change (for Difference-in-Difference)
+\item Binary variable which indicates whether the observation is in a state with a policy change (for difference-in-difference)
+
+\item County FIPS code
 
 \item Year
 
@@ -167,29 +170,30 @@ A single row in the data will contain one observation for one county for one yea
 
 %\emph{In specifying the datasets you need, if you list more than one \textbf{also} indicate how you think you can relate these datasets (i.e. if you're gonna merge them, what variables do you think those datasets will provide that will allow you merge them? There's no use saying ``I'll merge this political survey with medical records of who has received bad care'' if the political survey doesn't provide identifying information you can use to link survey respondents to medical records, even if you have both the survey and medical records!)}
 
+The above described required variables can be obtained by using the following data sources:
+
 \begin{itemize}
-	\item US Vital Statistics records
+	\item Drug overdose death data by the US Vital Statistics records
 	\item Prescription opioid drug shipments by the Washington Post
 	\item FIPS codes based on a file by the \href{https://www2.census.gov/geo/docs/reference/codes/files/national_county.txt}{US census}
 	\item \href{https://www.census.gov/programs-surveys/popest/data.html}{US census} population data
 \end{itemize}
 
-
-The data sets will be merged based on the county FIPS codes and the year. They are already included in the population data set and the US vital statistics records. Based on the county and state name they will be added to the prescription opioid drug shipment data.
+All these data sets need at least a location name (to infer the county) and a temporal unit (to infer the year). The data sets will be merged based on the county FIPS codes and the year. FIPS codes are already included in the population data set and the US Vital Statistics records. Based on the county and state name, FIPS codes will be merged with the prescription opioid drug shipment data. Besides that, the raw data must be aggregated on the county-year level so that the data is available for our preferred unit of observation.
 \vspace*{1cm}
 
 
-\section{Task assignment}
+\section{Task Assignment}
 
 \begin{center}
 \begin{tabular}{ l | l l}
 \textbf{Step}  & \textbf{Writes initial code} & \textbf{Reviews code}\\ \hline
  Import data & Fabian & Zhanyi\\  
  Clean and aggregate data & Fabian & Zhanyi\\
- Merge data & Zhanyi & Fabian \\
- Analyze data & Zhanyi & Xiaoquan \\
- Create graphs & Chenxi & Xiaoquan\\
- Report(E.g. Motivation, Conclusion) & Xiaoquan
+ Merge data & Zhanyi \& Chenxi & Fabian \\
+ Analyze data & Zhanyi \& Chenxi & Xiaoquan \\
+ Create graphs & Chenxi \&  Xiaoquan & Xiaoquan\\
+ Report(e.g. motivation, conclusion) & Xiaoquan & Chenxi \\
 \end{tabular}
 \end{center}
 
