@@ -58,7 +58,7 @@ opioid_data_final = opioid_data.groupby(
 assert not opioid_data_final.duplicated(["year", "BUYER_COUNTY", "BUYER_STATE"]).any()
 
 # Save intermediate dataset in paquet format
-opioid_data.to_parquet(
+opioid_data_final.to_parquet(
     "C:/Users/fabi3/Documents/PythonExercises/opioid_project/pds-2022-white-team/20_intermediate_files/opioid_data_woFIPS.parquet",
     engine="fastparquet",
 )
