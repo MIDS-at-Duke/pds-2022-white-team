@@ -15,20 +15,43 @@ cols = [
     "CALC_BASE_WT_IN_GM",
 ]
 
-# Use read_csv with appropriate separator to chunk the huge file and only import required columns
+# Unfortunately, all data types must be set to string in the beginning to avoid a warning
+# This will be changed after the flawed rows which contain variable names are dropped
+dtypes = {
+    "BUYER_COUNTY": str,
+    "BUYER_STATE": str,
+    "TRANSACTION_DATE": str,
+    "MME_Conversion_Factor": str,
+    "CALC_BASE_WT_IN_GM": str,
+}
+
+# Use read_csv to chunk the huge file and only import required columns
 opioid_data_chunk = pd.read_csv(
-    "C:/Users/fabi3/Documents/PythonExercises/opioid_project/source_data/arcos_all_washpost.tsv",
+    "C:/Users/fabi3/Documents/PythonExercises/opioid_project/source_data/national_shipment_data.csv",
     chunksize=2_000_000,
     iterator=True,
     usecols=cols,
-    sep="\t",
+    dtype=dtypes,
 )
 
 # Create empty data frame to put chunks in it
 opioid_data = pd.DataFrame([])
 
+
 # Loop over different chunks, make some modifications, and decrease number of observations by aggregating observations on the county-year level
 for chunk in opioid_data_chunk:
+
+    # Probably caused by the manual concatenating to include data from 2013 - 2014, some rows have have string entries so that the option errors = "coerce" is requried
+    # Convert columns to numeric data
+    chunk["TRANSACTION_DATE"] = pd.to_numeric(
+        chunk["TRANSACTION_DATE"], errors="coerce"
+    )
+    chunk["MME_Conversion_Factor"] = pd.to_numeric(
+        chunk["MME_Conversion_Factor"], errors="coerce"
+    )
+    chunk["CALC_BASE_WT_IN_GM"] = pd.to_numeric(
+        chunk["CALC_BASE_WT_IN_GM"], errors="coerce"
+    )
 
     # Extract year from TRANSACTION_DATE column (year is stored in the last 4 digits)
     chunk["year"] = chunk["TRANSACTION_DATE"] % 10_000
