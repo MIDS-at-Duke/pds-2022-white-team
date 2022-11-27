@@ -17,7 +17,7 @@ df = pd.read_parquet('./ship_pop.parquet')
 df.head()
 
 # %%
-# calculate the opioide per capita
+# calculate the opioid per capita
 df["opioid_per_capita"] = df["opioid_converted_grams"] / df["population"]
 df.head()
 
@@ -49,7 +49,7 @@ g = (
     + geom_text(x=-0.7, y=0.5, label="Policy Change", color="black")
     + labs(title="Pre-Post Model Graph, Policy Intervention")
 )
-#g.save("images/prepost_successful.pdf")
+# g.save("shipfl_prepost_successful.pdf")
 print(g)
 
 # %% [markdown]
@@ -86,7 +86,7 @@ g = (
                 , label="Policy Change", color="black")
     + labs(title="Pre-Post Model Graph, Policy Intervention")
 )
-#g.save("images/prepost_successful.pdf")
+# g.save("shiptx_prepost_successful.pdf")
 print(g)
 
 # %% [markdown]
@@ -123,7 +123,7 @@ g = (
                 , label="Policy Change", color="black")
     + labs(title="Pre-Post Model Graph, Policy Intervention")
 )
-#g.save("images/prepost_successful.pdf")
+# g.save("shipwa_prepost_successful.pdf")
 print(g)
 
 # %% [markdown]
@@ -174,6 +174,7 @@ g = (
     )
     + theme(legend_position="bottom")
 )
+# g.save("shipfl_did_successful.pdf")
 print(g)
 
 
@@ -219,6 +220,7 @@ g = (
     )
     + theme(legend_position="bottom")
 )
+# g.save("shiptx_did_notsure.pdf")
 print(g)
 
 # %% [markdown]
@@ -263,6 +265,7 @@ g = (
     )
     + theme(legend_position="bottom")
 )
+# g.save("shipwa_did_unsuccessful.pdf")
 print(g)
 
 # %% [markdown]
