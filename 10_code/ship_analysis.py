@@ -63,8 +63,8 @@ df_tx = df[df["BUYER_STATE"] == "TX"]
 df_tx.head()
 
 # %%
-df_tx.loc[:,"Policy Change"] = df_tx.loc[:,"year"] > 2008
-df_tx.loc[:,"Years from Policy Change"] = df_tx.loc[:,"year"] - 2008
+df_tx.loc[:,"Policy Change"] = df_tx.loc[:,"year"] > 2007
+df_tx.loc[:,"Years from Policy Change"] = df_tx.loc[:,"year"] - 2007
 
 # %%
 treated_success = df_tx[df_tx["Policy Change"]]
