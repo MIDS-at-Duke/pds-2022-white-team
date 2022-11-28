@@ -207,7 +207,7 @@ g = (
         method="lm", data=success_model[success_model["Years from Policy Change"] >= 0]
     )
     + geom_smooth(
-        method="lm", data=texas_compare[texas_compare ["Years from Policy Change"] <= 0]
+        method="lm", data=texas_compare[texas_compare ["Years from Policy Change"] < 0]
     )
     + geom_smooth(
         method="lm", data=texas_compare[texas_compare["Years from Policy Change"] >= 0]
@@ -252,7 +252,7 @@ g = (
         method="lm", data=success_model[success_model["Years from Policy Change"] >= 0]
     )
     + geom_smooth(
-        method="lm", data=wa_compare[wa_compare["Years from Policy Change"] <= 0]
+        method="lm", data=wa_compare[wa_compare["Years from Policy Change"] < 0]
     )
     + geom_smooth(
         method="lm", data=wa_compare[wa_compare["Years from Policy Change"] >= 0]
