@@ -54,6 +54,10 @@ print(g)
 # From the output of the graph, we can see the slope of regression model of opioid convert amount per capita is positive before the policy became effective, but changed to negative after the date the policy became effect. This means that the convert amoungt per capita increased year by year before the policy change and started to decrease annually after the policy effective date. Therefore, we may conclude that The policy is effective in Florida according to pre-post analysis.
 
 # %% [markdown]
+
+"""
+This part should be replaced by Chenxi's bounus analysis which is analyzed based on month level data (can show the trend of 2006)
+"""
 # ## Texas
 
 # %%
