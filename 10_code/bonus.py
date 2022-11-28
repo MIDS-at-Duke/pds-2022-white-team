@@ -8,6 +8,8 @@ ignore = filterwarnings("ignore")
 ## Merge the data
 dfm = pd.read_parquet("./opioid_data_woFIPS_monthly.parquet")
 dfm.head()
+
+# We select Arkansas, Oklahoma, and New Mexico as our controlled group because they are near Texas and have similar weather as Texas.
 left = dfm[dfm["BUYER_STATE"].isin(["TX", "AR", "OK", "NM"])]
 # left.BUYER_STATE.unique() #check the state
 # Read in the data
