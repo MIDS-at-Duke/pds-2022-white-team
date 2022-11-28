@@ -38,12 +38,10 @@ g = (
     + geom_smooth(
         method="lm",
         data=df_fl[df_fl["Years from Policy Change"] < 0],
-        se=False,
     )
     + geom_smooth(
         method="lm",
         data=treated_success[treated_success["Years from Policy Change"] >= 0],
-        se=False,
     )
     + geom_vline(xintercept=0, linetype="dashed")
     + geom_text(x=-0.7, y=0.5, label="Policy Change", color="black")
@@ -74,12 +72,10 @@ g = (
     + geom_smooth(
         method="lm",
         data=df_tx[df_tx["Years from Policy Change"] < 0],
-        se=False,
     )
     + geom_smooth(
         method="lm",
         data=treated_success[treated_success["Years from Policy Change"] >= 0],
-        se=False,
     )
     + geom_vline(xintercept=0, linetype="dashed")
     + geom_text(x=-0.9, y=0.21
@@ -111,12 +107,10 @@ g = (
     + geom_smooth(
         method="lm",
         data=df_wa[df_wa["Years from Policy Change"] < 0],
-        se=False,
     )
     + geom_smooth(
         method="lm",
         data=treated_success[treated_success["Years from Policy Change"] >= 0],
-        se=False,
     )
     + geom_vline(xintercept=0, linetype="dashed")
     + geom_text(x=-0.9, y=0.21
