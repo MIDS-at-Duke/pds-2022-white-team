@@ -45,7 +45,7 @@ g_pp = (
     )
     + geom_vline(xintercept=0, linetype="dashed")
     + geom_text(x=0, y=0.35, label="Policy Change", color="black")
-    + labs(title="Pre-Post Model Graph, Policy Intervention")
+    + labs(y="Opioid Per Capita", title="Pre-Post Model Graph, Policy Intervention")
 )
 print(g_pp)
 # In the left part of the chart the slope is sharper than the right's, which means the opioid converted amount per caipita increased year by year in Texas before January 2007. After the policy became effecive in January 2007, the trend is still increasing, but the gradient is smaller in the right part. Therefore, we may conclude that the policy restricted the opioid converted amount.
@@ -84,10 +84,11 @@ g_did = (
     + geom_vline(xintercept=0, linetype="dashed")
     + geom_text(x=0, y=0.35, label="Policy Change", color="black")
     + labs(
+        y="Opioid Per Capita",
         title="Diff-in-Diff Model Graph, Effective Policy Intervention",
         color="Counties in State with Policy Change",
     )
-    + theme(legend_position="bottom")
+    + theme(legend_position="right")
 )
 print(g_did)
 # g_did.save("tx_monthly_did_notsure.pdf")
