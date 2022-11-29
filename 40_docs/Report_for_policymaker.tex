@@ -77,24 +77,20 @@ From the output of the pre-post graph in Figure \ref{fig:fl_death}, we can obser
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=0.7\linewidth]{../30_results/General_Results/texas_opioid_shipment_prepost.png}
+  \includegraphics[width=0.7\linewidth]{../30_results/Bonus_Results/tx_monthly_prepost_successful.png}
   \caption{Pre-post analysis}
   \label{fig:tx_ship_prepost}
 \end{subfigure}%
 \begin{subfigure}{.55\textwidth}
   \centering
-  \includegraphics[width=1\linewidth]{../30_results/General_Results/texas_opioid_shipment_diffdiff.png}
+  \includegraphics[width=0.7\linewidth]{../30_results/Bonus_Results/tx_monthly_did_notsure.png}
   \caption{Diff-in-diff analysis}
   \label{fig:tx_ship_did}
 \end{subfigure}
 \caption{Analysis of opioid policy on opioid shipments in Texas}
 \label{fig:tx_ship}
 \end{figure}
-Since our shipment data only runs from 2006, meaning we only have one year of data on either side of the policy change, we analyzed opioid shipment data by month instead of by year.
-
-In the left part of the pre-post chart, the slope is sharper than the right's, which means the prescription opioid shipment amount per capita increased year by year in Texas before January 2007. After the policy became effective in January 2007, the trend is still increasing, but the gradient is smaller in the right part. Therefore, we may conclude that the policy restricted the opioid shipment amount.
-
-For the difference-in-difference analysis, we selected Arkansas, Oklahoma, and New Mexico as control groups since those three states are close to Texas. Compared to the control group, even though the amount of opioid shipment per capita in Texas is lower after January 2007, the trend is similar in Texas and control groups, and it seems that the control group experienced a sharper decrease. Therefore, we cannot conclude whether the control policy was successful in controlling the opioid shipments in Texas. \\
+Since the opioid shipment data is only available from 2006 on, meaning we only have one year of data before the policy change, we analyzed opioid shipment data by month instead of by year. The pre-post chart in Figure \ref{fig:tx_ship} shows a increasing trend in opioid shipments in Texas before and after the policy went into effect. However, increase is less steep after the policy implementation in January 2007. Therefore, we may conclude that the policy restricted the opioid shipment amount by a small amount. For the difference-in-difference analysis, we selected Arkansas, Oklahoma, and New Mexico as control groups since those three states are close to Texas. After the policy implementation, the trend in Texas and the control states is similar. Thus, we infer that the opioid policy in Texas was not successful in controlling the opioid shipments. \\
 
 \noindent \textbf{Overdose death}
 
@@ -116,7 +112,7 @@ For the difference-in-difference analysis, we selected Arkansas, Oklahoma, and N
 \label{fig:tx_death}
 \end{figure}
 
-From the output of the pre-post graph, we can tell the slope for overdose deaths per capita was positive before the policy became effective, but changed to negative after the date the policy became effective. This means that the overdose death per capita increased year by year before the policy change and started to decrease annually after the policy’s effective date. Therefore, we may conclude that the policy is effective in Texas according to pre-post analysis. Combining the output from the difference-in-difference analysis, we can see that the slope of control groups is still positive, but the slope of Texas overdose deaths per capita converts to negative. Therefore, we may conclude that the decrease in overdose deaths per capita in Texas after 2007 is because of the policy, which means the policy is effective.
+From the output of the pre-post graph, we can tell that the overdose death per 100,000 people increased year by year before the policy change and started to decrease annually after the policy's effective date. The difference-in-difference analysis reveals that neighboring states without a policy change witness an increase in overdose deaths while Texas has a negative trend after the policy implementation. Therefore, we may conclude that the decrease in overdose deaths per capita in Texas after 2007 is caused by the policy, which means that the policy is effective.
 
 \subsection{Washington}
 \textbf{Opioid shipment}
@@ -139,7 +135,7 @@ From the output of the pre-post graph, we can tell the slope for overdose deaths
 \label{fig:wa_ship}
 \end{figure}
 
-The pre-post analysis indicates that there is a positive trend in opioid shipments in Washington before the policy is implemented. This trend changes after the policy went into effect in 2012 and is since then slightly negative. Even though the fall in opioid shipments is not very pronounced, the overall trend is totally different from the previous years. For the difference-in-difference analysis, we selected Oregon, Idaho, and Montana as control groups since those three states are close to Texas. From the output, we can see that the development after the policy implementation is similar for Washington and the states in the control group. Hence, the pre-post analysis and the diff-in-diff analysis provide opposing conclusion. Due to the statistical superiority of the latter, we cannot conclude that the policy is successful in Washington with regards to shipped opioids. \\
+The pre-post analysis in Figure \ref{wa_ship} indicates that there is a positive trend in opioid shipments in Washington before the policy is implemented. This trend changes after the policy went into effect in 2012 and is since then slightly negative. Even though the fall in opioid shipments is not very pronounced, the overall trend is totally different from the previous years. For the difference-in-difference analysis, we selected Oregon, Idaho, and Montana as control groups since those three states are close to Texas. From the output, we can see that the development after the policy implementation is similar for Washington and the states in the control group. Hence, the pre-post analysis and the diff-in-diff analysis provide opposing conclusion. Due to the statistical superiority of the latter, we cannot conclude that the policy is successful in Washington with regards to shipped opioids. \\
 
 \noindent \textbf{Overdose death}
 
@@ -161,21 +157,14 @@ The pre-post analysis indicates that there is a positive trend in opioid shipmen
 \label{fig:wa_death}
 \end{figure}
 
-From the pre-post graph, we can tell that number of overdose deaths per 100,000 people in Washington was both increasing before and after the policy became effective. Though briefly after the policy implementation, the overdose deaths per capita became lower, they still increased year by year after the policy's effective date by an even larger number. Combining this insight with the output from the difference-in-difference analysis, we can see that the trends for both Washington and states in the control group are the same before and after the policy became effective. Therefore, we can conclude that the policy was not successful in controlling the increasing trend of overdose deaths in Washington.
+From the pre-post graph in Figure \ref{wa_death}, we can tell that number of overdose deaths per 100,000 people in Washington was both increasing before and after the policy became effective. Though briefly after the policy implementation, the overdose deaths per capita became lower, they still increased year by year after the policy's effective date by an even larger number. Combining this insight with the output from the difference-in-difference analysis, we can see that the trends for both Washington and states in the control group are the same before and after the policy became effective. Therefore, we can conclude that the policy was not successful in controlling the increasing trend of overdose deaths in Washington.
 
 
 \section{Conclusion}
 
 Based on the graphs of our pre-post and difference-in-difference analysis, Florida's drug policy was effective in decreasing the prescription opioid shipment amount as well as decreasing the overdose deaths. Texas' drug policy was not successful in controlling the opioid shipments but did decrease the overdose deaths. However, Washington's drug policy was not successful in both controlling the opioid shipments and decreasing the overdose deaths.
 
-
-
-By comparing policies in the three states, we can learn that since there were a series of changes in Florida that strictly prohibited physician dispensing of drugs and penalized it by arrest, seizure of assets, and clinic closure, strict policies combined with the practical implementation of penalties make the policy have the desired effect. However, policies in both Texas and Washington were mainly focused on performing patient evaluation and consulting, obtaining patients' consent, and making dose recommendations. Those policies seem too moderate to be effective, and in the meantime, no severe penalty was provided. Furthermore, policies in Florida focused on cutting off the source of prescription opioids, which reduced opioid dispensing to the greatest extent possible. In a word, the problem's root cause should be considered when making policies, and strict rules that are well-applied can assist in producing the intended effects.
-
-
-
-
-
+By comparing policies in the three states, we can learn that since there were a series of changes in Florida that strictly prohibited physician dispensing of drugs and penalized it by arrest, seizure of assets, and clinic closure, strict policies combined with the practical implementation of penalties achieve that the policy have the desired effect. However, policies in both Texas and Washington were mainly focused on performing patient evaluation and consulting, obtaining patients' consent, and making dose recommendations. Those policies seem to be too moderate to be effective, and in the meantime, no severe penalty was introduced. Furthermore, policies in Florida focused on cutting off the source of prescription opioids, which reduced opioid dispensing to the greatest extent possible. To sum up, the problem's root cause should be considered when making policies, and strict rules that are well-applied can assist in producing the intended effects.
 
 
 \end{document}
