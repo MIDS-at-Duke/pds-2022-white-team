@@ -1,0 +1,204 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\author{White Team \\ Chenxi Rong, Xiaoquan Liu, Zhanyi Lin, Fabian Schmid}
+\title{Estimate the Impact of Opioid Control Policies \\ (Report for Nick)}
+\begin{document}
+\maketitle
+
+\section{Motivation}
+Opioids are a class of drugs that include prescription opioids (natural and semi-synthetic opioids and methadone), heroin, and synthetic opioids other than methadone (primarily fentanyl) that derive from, or mimic, natural substances found in the opium poppy plant and work in the brain to produce a variety of effects, including pain relief. Opioid drugs include prescription pain medicine and illegal drugs. Some people may experience euphoria, a joyful sensation of well-being, from opioids, whether they are legally prescribed or not. Opioids do not always generate euphoria, but for those who do, there is a chance they will be used again and again because of how they feel. Therefore, even with a doctor's supervision, using opioids can pose risks. A person's tolerance and dependency to prescription drugs can develop over time, necessitating greater and more frequent dosages, finally leading to addiction and the person's turning to illegal markets in order to maintain their addiction, and subsequently causing death.
+
+According to the Centers for Disease Control and Prevention (CDC), the number of drug overdose deaths has quintupled since 1999, and the rise in opioid overdose deaths can be outlined in three distinct waves: the first wave in the 1990s with increased prescribing of opioids, the second wave in 2010 with heroin, and the third wave in 2013 with synthetic opioids like fentanyl. In order to fight the opioid overdose epidemic, policymakers have made policy interventions to limit the over prescription of opioids. Texas regulations with regard to treating pain with controlled substances went into effect in January 2007. Florida’s legislature became effective in 2010, and a series of changes related to drug prescription took place in the following years. Washington regulated the prescribing requirements of opioids for pain treatment in January 2012, which included periodic patient reviews, milligram thresholds, strict documentation guidelines, and consultations with pain management experts.
+
+For all three of these policy changes, we performed both a pre-post analysis and a difference-in-difference analysis to understand the effect of opioid drug regulations on both the amount of opioid shipments and drug overdose deaths. For the pre-post analysis, we will demonstrate the trend of overdose deaths and opioid shipments over years. After the policy went into effect, we analyze if our plots show a difference in the trend in each state right before the policy became effective and right it.
+
+However, to further valid our analysis of causation between opioid drug regulations and both the amount of opioids shipments and drug overdose deaths, we need to eliminate the effect of confounders. For example, the US Customs Service managed to dramatically reduce the importation of fentanyl into the United States at the same time Florida’s policy went into effect, which would likely reduce the number of overdose deaths throughout the United States. If we were just to use the pre-post analysis to bring a conclusion by comparing Florida in 2009 to Florida in 2011, we would wrongly attribute the decline in the amount of shipments and overdose deaths to Florida’s policy change. With a difference-in-difference analysis, we use the observed outcomes of people who are exposed to drug regulations (i.e., data from Texas, Florida, and Washington) and people who were not exposed to drug regulations (i.e., for each of those states, we picked three states as comparison states) both before and after the policy went into effect. We compare the development in the treatment and control states over time to evaluate the impact of opioid control policies. A crucial assumption is that the trend in the control states after the policy implementation is similar to the one that the treatment state would have experienced without the policy.
+
+\section{Data}
+We used drug overdose death data from the US Vital Statistics records, prescription opioid drug shipments from the Washington Post, FIPS codes based on a file from the US Census, and US census population data. All these data sets need at least a location name (to infer the county) and a temporal unit (to infer the year). All raw data was aggregated at the county-year level so that the data is available for our preferred unit of observation.
+
+For the opioid shipment data, we used the total active weight of the drug in grams and converted it to a morphine equivalent so that different kind of opioids are comparable. To deal with the huge raw data set ($>$ 100 GB), we only imported the required columns, chunked the data, and grouped it by year and county to reduce the number of rows and end up with our preferred unit of observation. Unfortunately, this data set only contains the county name but no FIPS code. This problem was solved later in the merging step.
+
+For the mortality data, we assigned the following five death causes as drug related: "Drug poisonings (overdose) Undetermined (Y10-Y14)", "Drug poisonings (overdose) Unintentional (X40-X44)", "Drug poisonings (overdose) Suicide (X60-X64)", "Drug poisonings (overdose) Homicide (X85)", and "All other drug-induced causes". Again the FIPS code caused problems in this data set. Although they were already included, some of them had only four digits so that it was required to add a zero to the beginning in these cases so that the merging later on works without problems.
+
+The US census population data is published once every decade. As we require data for two decades, we used two datasets and concatenated them. The population data set also required modifications to the FIPS code as it only included the two-digit state FIPS code and the three-digit county FIPS code. To combine them, it was again necessary to add zeros in the beginning if they have only one or two digits. Furthermore, it was necessary to reshape the data from wide to long so that we have our preferred unit of observation.
+
+Based on our research questions and data collected, we merged the data into two master sheets. The first one contains opioid shipment and population to analyze how the policy influences the opioid convert amount. The second dataframe contains the overdose death data and population data. 
+
+The different data sets were merged based on the county FIPS codes and the year. FIPS codes are already included in the population data set and the US Vital Statistics records. Because the opioid shipment data only contains the county name and state name, but no FIPS code, we firstly merge this dataframe with a data set including all county FIPS codes and the associated county and state name. At first, the merging process generated some observations with no FIPS code. With the option indicators, we found that this is caused by the different spelling of County Name in the FIPS data and in the opioid shipment data. After unifying the spelling of county name in both dataframes, the merge succeeded with a m:1 pattern. This was successfully tested with an assert statement.
+
+In the next step, we merge the intermediate dataframe with the population data based on the FIPS code and year since the data is grouped by our preferred unit of observation. After the merge, we found that there are opioid shipment data only observations. We checked the specific counties and states which miss the population data. The output indicated that the counties which have no population data are Puerto Rico which is a Caribbean Island and unincorporated U.S. territory island. This state is not one of our target analysis state or in our selected control group. Hence, we safely drop those counties.
+
+As for the master sheet for overdose death and population, since both dataframes have the variables FIPS and year, we directly merge them based on those two features. We also employed the option indicator and validate to check the merge results. Firstly, the validate option showed that the observations are merged in m:1 pattern. However, the indicator returns that in addition to AK, there are still two counties in VA with missing population data. We examined the population data of those two counties and found the population data does not include those two counties. As we discussed in the former part, Virginia is also not needed in our analysis. Hence, we currently drop those observations. If those counties are needed for future analysis, we will use other sources to find the corresponding population of those two counties.
+
+\section{Analysis}
+
+\subsection{Summary statistics}
+
+
+\subsection{Florida}
+
+\textbf{Opioid shipment}
+
+\begin{figure}[!h]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{../30_results/General_Results/florida_opioid_shipment_prepost.png}
+  \caption{Pre-post analysis}
+  \label{fig:fl_ship_prepost}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{../30_results/General_Results/florida_opioid_shipment_diffdiff.png}
+  \caption{Diff-in-diff analysis}
+  \label{fig:fl_ship_did}
+\end{subfigure}
+\caption{Analysis of opioid policy on opioid shipments in Florida}
+\label{fig:fl_ship}
+\end{figure}
+
+
+From the output of the pre-post graph, we can see the slope of regression model of prescriptions opioid shipment per capita. The slope of opioid shipment amount per capita was positive before the policy became effective, but changed to negative after the date the policy became effect. This means that the opioid shipment per capita increased year by year before the policy change and started to decrease annually after the policy effective date. Therefore, we may conclude that the policy is effective in Florida according to pre-post analysis.
+
+For the different-in-different analysis, we selected Georgia, North Carolina, and South Carolina since those three states are close to Florida and have similar weather. From the output, we can see that the slope of control groups is still positive but the slope of Florida opioid shipment converts to negative. Therefore, we may conclude that the decrease of the opioid per capita in Florida after 2010 is because of the policy, which means the policy is effective. \\
+
+\noindent \textbf{Overdose death} \\
+
+\begin{figure}[!h]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.7\linewidth]{../30_results/General_Results/florida_overdose_death_prepost.png}
+  \caption{Pre-post analysis}
+  \label{fig:fl_death_prepost}
+\end{subfigure}%
+\begin{subfigure}{.55\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{../30_results/General_Results/florida_overdose_death_diffdiff.png}
+  \caption{Diff-in-diff analysis}
+  \label{fig:fl_death_did}
+\end{subfigure}
+\caption{Analysis of opioid policy on overdose deaths in Florida}
+\label{fig:fl_death}
+\end{figure}
+
+
+From the output of the pre-post graph, we can see the slope of regression model of the overdose deaths per capita. The slope was positive before the policy became effective, but changed to negative after the date the policy became effective. This means that the overdose deaths per capita increased year by year before the policy change and started to decrease annually after the policy effective date. Therefore, we may conclude that the policy is effective in Florida according to pre-post analysis. Combining the output from the difference-in-difference analysis, we can see that the slope of control groups is still positive but the slope of Florida overdose deaths per capita converts to negative. Therefore, we may conclude that the decrease of the overdose deaths per capita in Florida after 2010 is because of the policy, which means the policy is effective.
+
+\subsection{Texas}
+\textbf{Opioid shipment}
+
+\begin{figure}[!h]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.7\linewidth]{../30_results/General_Results/texas_opioid_shipment_prepost.png}
+  \caption{Pre-post analysis}
+  \label{fig:tx_ship_prepost}
+\end{subfigure}%
+\begin{subfigure}{.55\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{../30_results/General_Results/texas_opioid_shipment_diffdiff.png}
+  \caption{Diff-in-diff analysis}
+  \label{fig:tx_ship_did}
+\end{subfigure}
+\caption{Analysis of opioid policy on opioid shipments in Texas}
+\label{fig:tx_ship}
+\end{figure}
+Since our shipment data only runs from 2006, meaning we only have one year of data on either side of the policy change, we analyzed opioid shipment data by month instead of by year.
+
+In the left part of the pre-post chart, the slope is sharper than the right's, which means the prescription opioid shipment amount per capita increased year by year in Texas before January 2007. After the policy became effective in January 2007, the trend is still increasing, but the gradient is smaller in the right part. Therefore, we may conclude that the policy restricted the opioid shipment amount.
+
+For the difference-in-difference analysis, we selected Arkansas, Oklahoma, and New Mexico as control groups since those three states are close to Texas. Compared to the control group, even though the amount of opioid shipment per capita in Texas is lower after January 2007, the trend is similar in Texas and control groups, and it seems that the control group experienced a sharper decrease. Therefore, we cannot conclude whether the control policy was successful in controlling the opioid shipments in Texas. \\
+
+\noindent \textbf{Overdose death}
+
+\begin{figure}[!h]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.7\linewidth]{../30_results/General_Results/texas_overdose_death_prepost.png}
+  \caption{Pre-post analysis}
+  \label{fig:tx_death_prepost}
+\end{subfigure}%
+\begin{subfigure}{.55\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{../30_results/General_Results/texas_overdose_death_diffdiff.png}
+  \caption{Diff-in-diff analysis}
+  \label{fig:tx_death_did}
+\end{subfigure}
+\caption{Analysis of opioid policy on overdose deaths in Texas}
+\label{fig:tx_death}
+\end{figure}
+
+From the output of the pre-post graph, we can tell the slope for overdose deaths per capita was positive before the policy became effective, but changed to negative after the date the policy became effective. This means that the overdose death per capita increased year by year before the policy change and started to decrease annually after the policy’s effective date. Therefore, we may conclude that the policy is effective in Texas according to pre-post analysis. Combining the output from the difference-in-difference analysis, we can see that the slope of control groups is still positive, but the slope of Texas overdose deaths per capita converts to negative. Therefore, we may conclude that the decrease in overdose deaths per capita in Texas after 2007 is because of the policy, which means the policy is effective.
+
+\subsection{Washington}
+\textbf{Opioid shipment}
+
+\begin{figure}[!h]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.7\linewidth]{../30_results/General_Results/washington_opioid_shipment_prepost.png}
+  \caption{Pre-post analysis}
+  \label{fig:wa_ship_prepost}
+\end{subfigure}%
+\begin{subfigure}{.55\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{../30_results/General_Results/washington_opioid_shipment_diffdiff.png}
+  \caption{Diff-in-diff analysis}
+  \label{fig:wa_ship_did}
+\end{subfigure}
+\caption{Analysis of opioid policy on opioid shipments in Washington}
+\label{fig:wa_ship}
+\end{figure}
+
+From the pre-post output, we can find that the slope of prescription opioid shipments amount was positive before the date of policy being effective and became negative after 2012 in which year the policy became effective. Even though the gradient indicates that the decreasing speed is not high, but the overall trend is totally different from the previous years. Hence, we conclude that the policy has positive influence on prescription opioid shipment amount restriction.
+
+For the difference-in-difference analysis, we selected Oregon, Idaho, and Montana as control groups since those three states are close to Texas. From the output, we can see the gradient change is similar for Washington and states in control groups. Hence, we cannot conclude the policy is the only factor which deceased the prescription opioid shipment amount per capita. \\
+
+\noindent \textbf{Overdose death}
+
+\begin{figure}[!h]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.7\linewidth]{../30_results/General_Results/washington_overdose_death_prepost.png}
+  \caption{Pre-post analysis}
+  \label{fig:wa_death_prepost}
+\end{subfigure}%
+\begin{subfigure}{.55\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{../30_results/General_Results/washington_overdose_death_diffdiff.png}
+  \caption{Diff-in-diff analysis}
+  \label{fig:wa_death_did}
+\end{subfigure}
+\caption{Analysis of opioid policy on overdose deaths in Washington}
+\label{fig:wa_death}
+\end{figure}
+
+From the output of the pre-post graph, we can tell the slope for overdose deaths per capita was both positive before and after the policy became effective. Though at the beginning of the policy became effective, the overdose death per capita became lower, the overdose death per capita still increased year by year after the policy’s effective date. Combining the output from the difference-in-difference analysis, we can see that the trends for both Washington and states in the control group are the same before and after the policy became effective. Therefore, we cannot conclude whether the control policy was successfully in controlling the overdose death in Washington.
+
+
+\section{Conclusion}
+
+Based on the graphs of our pre-post and difference-in-difference analysis, Florida’s drug policy was effective in decreasing the prescription opioid shipment amount as well as decreasing the overdose deaths. Taxes’ drug policy was not successful in controlling the opioid shipments but did decrease the overdose deaths. However, Washingtons’ drug policy was not successful in both controlling the opioid shipments and decreasing the overdose deaths.
+
+
+
+
+
+
+
+
+\end{document}
