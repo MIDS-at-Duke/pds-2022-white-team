@@ -13,13 +13,14 @@ ignore = filterwarnings('ignore')
 
 # %%
 # Read in the data
-df = pd.read_parquet('./death_pop.parquet')
+df = pd.read_csv('/Users/a563186832/Documents/GitHub/pds-2022-white-team/10_code/death_pop.csv')
 df.head()
 
 # %%
 # calculate the overdose death per capita
-df["death_per_capita"] = df["Deaths"] / df["population"]
+df["death per 100000 people"] = df["Deaths"] / df["population"] * 100000
 df["state"] = df["County"].str.split(", ").str[1]
+
 df.head()
 
 # %%
@@ -31,7 +32,7 @@ df_fl.loc[:,"Years from Policy Change"] = df_fl["year"] - 2010
 # %%
 treated_success = df_fl[df_fl["Policy Change"]]
 g = (
-    ggplot(treated_success, aes(x="Years from Policy Change", y="death_per_capita"))
+    ggplot(treated_success, aes(x="Years from Policy Change", y="death per 100000 people"))
     
     + geom_smooth(
         method="lm",
@@ -65,7 +66,7 @@ df_tx.loc[:,"Years from Policy Change"] = df_tx.loc[:,"year"] - 2007
 # %%
 treated_success = df_tx[df_tx["Policy Change"]]
 g = (
-    ggplot(treated_success, aes(x="Years from Policy Change", y="death_per_capita"))
+    ggplot(treated_success, aes(x="Years from Policy Change", y="death per 100000 people"))
     
     + geom_smooth(
         method="lm",
@@ -100,7 +101,7 @@ df_wa.loc[:,"Years from Policy Change"] = df_wa["year"] - 2012
 # %%
 treated_success = df_wa[df_wa["Policy Change"]]
 g = (
-    ggplot(treated_success, aes(x="Years from Policy Change", y="death_per_capita"))
+    ggplot(treated_success, aes(x="Years from Policy Change", y="death per 100000 people"))
     
     + geom_smooth(
         method="lm",
@@ -126,19 +127,19 @@ print(g)
 
 # %%
 # Select the states that we want to use as control group
-florida_compare = df[df["state"].isin(["GA", "NC", "SC"])]
+florida_compare = df[df["state"].isin(["NC", "TN", "IA"])]
 florida_compare["Policy Change"] = florida_compare["year"] > 2010
 florida_compare["Years from Policy Change"] = florida_compare["year"] - 2010
 florida_compare["Compare"] = "Control Group"
 df_fl["Compare"] = "Florida"
 
 # %%
-success_model = df_fl[["Policy Change","Years from Policy Change","death_per_capita","Compare"]].copy()
+success_model = df_fl[["Policy Change","Years from Policy Change","death per 100000 people","Compare"]].copy()
 
 g = (
     ggplot(
         success_model,
-        aes(x="Years from Policy Change", y="death_per_capita", color="Compare"),
+        aes(x="Years from Policy Change", y="death per 100000 people", color="Compare"),
     )
     + geom_smooth(
         method="lm", data=success_model[success_model["Years from Policy Change"] < 0]
@@ -158,8 +159,9 @@ g = (
         title="Diff-in-Diff Model Graph, Effective Policy Intervention",
         color="Counties in State with Policy Change",
     )
-    + theme(legend_position="bottom")
+    + theme(legend_position="right")
 )
+g.save("/Users/a563186832/Desktop/pngs/florida_overdose_death_diffdiff.png")
 print(g)
 
 # %% [markdown]
@@ -170,19 +172,19 @@ print(g)
 
 # %%
 # Select the states that we want to use as control group
-texas_compare = df[df["state"].isin(["AR", "OK", "NM"])]
+texas_compare = df[df["state"].isin(["WV", "OR", "ID"])]
 texas_compare["Policy Change"] = texas_compare["year"] > 2007
 texas_compare["Years from Policy Change"] = texas_compare["year"] - 2007
 texas_compare["Compare"] = "Control Group"
 df_tx["Compare"] = "Texas"
 
 # %%
-success_model = df_tx[["Policy Change","Years from Policy Change","death_per_capita","Compare"]].copy()
+success_model = df_tx[["Policy Change","Years from Policy Change","death per 100000 people","Compare"]].copy()
 
 g = (
     ggplot(
         success_model,
-        aes(x="Years from Policy Change", y="death_per_capita", color="Compare"),
+        aes(x="Years from Policy Change", y="death per 100000 people", color="Compare"),
     )
     + geom_smooth(
         method="lm", data=success_model[success_model["Years from Policy Change"] < 0]
@@ -191,7 +193,7 @@ g = (
         method="lm", data=success_model[success_model["Years from Policy Change"] >= 0]
     )
     + geom_smooth(
-        method="lm", data=texas_compare[texas_compare ["Years from Policy Change"] <= 0]
+        method="lm", data=texas_compare[texas_compare ["Years from Policy Change"] < 0]
     )
     + geom_smooth(
         method="lm", data=texas_compare[texas_compare["Years from Policy Change"] >= 0]
@@ -202,8 +204,9 @@ g = (
         title="Diff-in-Diff Model Graph, Effective Policy Intervention",
         color="Counties in State with Policy Change",
     )
-    + theme(legend_position="bottom")
+    + theme(legend_position="right")
 )
+g.save("/Users/a563186832/Desktop/pngs/texas_overdose_death_diffdiff.png")
 print(g)
 
 # %% [markdown]
@@ -214,19 +217,19 @@ print(g)
 
 # %%
 # Select the states that we want to use as control group
-wa_compare = df[df["state"].isin(["OR", "ID", "MT"])]
+wa_compare = df[df["state"].isin(["KS", "NJ", "OR"])]
 wa_compare["Policy Change"] = wa_compare["year"] > 2012
 wa_compare["Years from Policy Change"] = wa_compare["year"] - 2012
 wa_compare["Compare"] = "Control Group"
 df_wa["Compare"] = "Washington"
 
 # %%
-success_model = df_wa[["Policy Change","Years from Policy Change","death_per_capita","Compare"]].copy()
+success_model = df_wa[["Policy Change","Years from Policy Change","death per 100000 people","Compare"]].copy()
 
 g = (
     ggplot(
         success_model,
-        aes(x="Years from Policy Change", y="death_per_capita", color="Compare"),
+        aes(x="Years from Policy Change", y="death per 100000 people", color="Compare"),
     )
     + geom_smooth(
         method="lm", data=success_model[success_model["Years from Policy Change"] < 0]
@@ -235,7 +238,7 @@ g = (
         method="lm", data=success_model[success_model["Years from Policy Change"] >= 0]
     )
     + geom_smooth(
-        method="lm", data=wa_compare[wa_compare["Years from Policy Change"] <= 0]
+        method="lm", data=wa_compare[wa_compare["Years from Policy Change"] < 0]
     )
     + geom_smooth(
         method="lm", data=wa_compare[wa_compare["Years from Policy Change"] >= 0]
@@ -246,8 +249,9 @@ g = (
         title="Diff-in-Diff Model Graph, Effective Policy Intervention",
         color="Counties in State with Policy Change",
     )
-    + theme(legend_position="bottom")
+    + theme(legend_position="right")
 )
+g.save("/Users/a563186832/Desktop/pngs/washington_overdose_death_diffdiff.png")
 print(g)
 
 # %% [markdown]
