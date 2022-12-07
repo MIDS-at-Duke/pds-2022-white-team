@@ -42,23 +42,44 @@ As both the master sheet for overdose death and population have the variables FI
 \section{Analysis}
 
 \subsection{Summary statistics}
-As described, the analysis takes a look at two outcome variables. In Figure \ref{fig:sum_deaths}, summary statistics for overdose deaths per 100,000 people are provided. They are reported separately for states with policy changes and the corresponding control group before and after the policy implementation.
+As described, the analysis takes a look at two outcome variables. In Table \ref{tab:sum_deaths}, summary statistics for overdose deaths per 100,000 people are provided. They are reported separately for states with policy changes and the corresponding control group before and after the policy implementation.
 
-\begin{figure}[!h]
-  \centering
-\includegraphics[width=0.7\linewidth]{../30_results/General_Results/death_statistic_analysis.png}
-  \caption{Summary statistics for overdose deaths}
-  \label{fig:sum_deaths}
-\end{figure}  
+\begin{table}[htbp]\centering \caption{Summary statistics for overdose deaths per 100,000 inhabitants \label{tab:sum_deaths}}
 
-Figure \ref{fig:sum_ship} summarizes the statistics for the opioid shipment data. Data for Texas is not reported as a different approach was required for this state. Due to the unavailability of enough annual data prior to the policy change, the analysis in Texas is conducted on a monthly basis.
+\begin{tabular}{ccccccc}\hline \hline
+ State & \begin{tabular}[x]{@{}c@{}}Year of policy\\implementation\end{tabular}& Statistics & Mean & Std. Dev. & Min. & Max. \\ \hline
+ Florida & 2010 & Before & 14.57 & 6.13 & 3.83 & 35.19 \\
+ & & After & 14.92 & 6.35 & 3.90 & 40.82 \\
+ Control group &  & Before & 12.62 & 6.63 & 3.03 & 45.28 \\
+(GA, NC, SC) &  & After & 14.75 & 7.14 & 4.74 & 62.55 \\ \hline
+ Texas & 2007 & Before & 10.14 & 6.57 & 1.46 & 41.55 \\
+ & & After & 10.38 & 4.99 & 1.80 & 35.45 \\
+ Control group & & Before & 17.52 & 9.18 & 4.50 & 46.75 \\
+(AR, OK, NM) & & After & 19.99 & 11.49 & 4.59 & 98.15 \\ \hline
+ Washington & 2012 & Before & 13.28 & 5.36 & 4.26 & 31.41 \\
+  & & After & 13.97 & 4.75 & 5.68 & 26.39 \\
+ Control group & & Before & 11.05 & 5.51 & 3.56 & 33.38 \\
+(OR, ID, MT) & & After & 12.66 & 5.60 & 3.39 & 30.74 \\
+\end{tabular}
 
-\begin{figure}[!h]
-  \centering
-\includegraphics[width=0.7\linewidth]{../30_results/General_Results/shipment_statistic_analysis.png}
-  \caption{Summary statistics for opioid shipments}
-  \label{fig:sum_ship}
-\end{figure} 
+\end{table}
+
+Table \ref{tab:sum_ship} summarizes the statistics for the opioid shipment data. Data for Texas is not reported as a different approach was required for this state. Due to the unavailability of enough annual data prior to the policy change, the analysis in Texas is conducted on a monthly basis.
+
+\begin{table}[htbp]\centering \caption{Summary statistics for opioid shipments in MME converted grams per capita \label{tab:sum_ship}}
+
+\begin{tabular}{ccccccc} \hline \hline
+State & \begin{tabular}[x]{@{}c@{}}Year of policy\\implementation\end{tabular} & Statistics & Mean & Std. Dev. & Min. & Max. \\ \hline
+Florida & 2010 & Before & 0.45 & 0.28 & 0.08 & 1.78 \\
+& & After & 0.53 & 0.33 & 0.07 & 2.27 \\
+Control group & & Before & 0.31 & 0.18 & 0.00 & 1.44  \\
+(GA, NC, SC) & & After & 0.46 & 0.26 & 0.00 & 2.63 \\ \hline
+Washington & 2012 & Before & 0.36 & 0.16 & 0.10 & 0.85 \\
+& & After & 0.39 & 0.15 & 0.14 & 0.88 \\
+Control group& & Before & 0.29 & 0.17 & 0.00 & 0.90 \\
+(OR, ID, MT) & & After & 0.37 & 0.20 & 0.00 & 1.00 \\
+\end{tabular}
+\end{table}
 
 \subsection{Florida}
 

@@ -30,8 +30,14 @@ vital_stat = vital_stat.loc[vital_stat["Notes"].isnull(), :]
 # Drop notes column
 vital_stat = vital_stat.drop("Notes", axis=1)
 
-# Replace missing values of deaths as zero (see instructions by Nick) and convert to numeric data type
-vital_stat.loc[vital_stat["Deaths"] == "Missing", "Deaths"] = 0
+# Check cases which have missing data
+vital_stat.loc[vital_stat["Deaths"] == "Missing", "County"].value_counts()
+
+# The 5 counties with missing data are located in Alaska and Virgina, both states are not used in our analysis
+# Thus, we drop these observation
+vital_stat = vital_stat.loc[vital_stat["Deaths"] != "Missing", :]
+
+# Convert to numeric data type
 vital_stat["Deaths"] = vital_stat["Deaths"].astype("float64")
 
 
