@@ -13,7 +13,7 @@ dfm.head()
 left = dfm[dfm["BUYER_STATE"].isin(["TX", "MS", "MT", "CT"])]
 # left.BUYER_STATE.unique() #check the state
 # Read in the data
-df = pd.read_parquet("./ship_pop.parquet")
+df = pd.read_parquet("./ship_pop_monthly.parquet")
 df.head()
 right = df[df["BUYER_STATE"].isin(["TX", "MS", "MT", "CT"])].loc[
     :, ["year", "BUYER_COUNTY", "BUYER_STATE", "population"]
@@ -92,4 +92,3 @@ g_did = (
 )
 print(g_did)
 # g_did.save("tx_monthly_did_notsure.pdf")
-# We selected Arkansas, Oklahoma, and New Mexico as control groups. Compared to the control group, even though the amount of opioid shipment per capita in Texas is lower after January 2010, the trend is similar in Texas and control groups, and it seems that the control group experienced a sharper decrease. Therefore, we cannot conclude whether the control policy was successfully in controlling the opioid shipments in Texas.
