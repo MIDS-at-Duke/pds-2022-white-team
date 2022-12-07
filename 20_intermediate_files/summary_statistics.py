@@ -174,7 +174,6 @@ df_FL = opioid[opioid["BUYER_STATE"].isin(states_FL_opioid)]
 df_TX = opioid[opioid["BUYER_STATE"].isin(states_TX_opioid)]
 df_WA = opioid[opioid["BUYER_STATE"].isin(states_WA_opioid)]
 
-# %%
 df_FL_pre = df_FL[df_FL["year"] < 2010]
 df_FL_post = df_FL[df_FL["year"] >= 2010]
 
@@ -184,7 +183,6 @@ df_TX_post = df_TX[df_TX["year"] >= 2007]
 df_WA_pre = df_WA[df_WA["year"] < 2011]
 df_WA_post = df_WA[df_WA["year"] >= 2011]
 
-# %%
 # Florida and control groups
 pre_FL = df_FL_pre.loc[df_FL_pre["BUYER_STATE"] == "FL"]["opioid_per_capita"].describe()
 pre_FL_x = df_FL_pre.loc[df_FL_pre["BUYER_STATE"] != "FL"][
@@ -197,7 +195,6 @@ post_FL_x = df_FL_post.loc[df_FL_post["BUYER_STATE"] != "FL"][
     "opioid_per_capita"
 ].describe()
 
-# %%
 # Washington and control groups
 pre_WA = df_WA_pre.loc[df_WA_pre["BUYER_STATE"] == "WA"]["opioid_per_capita"].describe()
 pre_WA_x = df_WA_pre.loc[df_WA_pre["BUYER_STATE"] != "WA"][
@@ -210,7 +207,6 @@ post_WA_x = df_WA_post.loc[df_WA_post["BUYER_STATE"] != "WA"][
     "opioid_per_capita"
 ].describe()
 
-# %%
 opioid_summary_stat_dict = {
     "State": [
         "Florida",
@@ -277,7 +273,6 @@ opioid_summary_stat_dict = {
 
 opioid_summary_stat_df = pd.DataFrame(opioid_summary_stat_dict)
 
-# %%
 s = opioid_summary_stat_df.style
 s.format(precision=2)
 s.to_latex()
