@@ -9,13 +9,13 @@ ignore = filterwarnings("ignore")
 dfm = pd.read_parquet("./opioid_data_woFIPS_monthly.parquet")
 dfm.head()
 
-# We select Arkansas, Oklahoma, and New Mexico as our controlled group because they are near Texas and have similar weather as Texas.
-left = dfm[dfm["BUYER_STATE"].isin(["TX", "AR", "OK", "NM"])]
+# For the difference-in-difference analysis, we selected Mississippi, Montana, and Connecticut as states for the control group since these three states have a similar trend in opioid shipments like Texas before the policy was implemented.
+left = dfm[dfm["BUYER_STATE"].isin(["TX", "MS", "MT", "CT"])]
 # left.BUYER_STATE.unique() #check the state
 # Read in the data
 df = pd.read_parquet("./ship_pop.parquet")
 df.head()
-right = df[df["BUYER_STATE"].isin(["TX", "AR", "OK", "NM"])].loc[
+right = df[df["BUYER_STATE"].isin(["TX", "MS", "MT", "CT"])].loc[
     :, ["year", "BUYER_COUNTY", "BUYER_STATE", "population"]
 ]
 # right.BUYER_STATE.unique() # check the state
@@ -54,7 +54,7 @@ print(g_pp)
 
 ## DID
 # Select the states that we want to use as control group
-texas_compare = df_month[df_month["BUYER_STATE"].isin(["AR", "OK", "NM"])]
+texas_compare = df_month[df_month["BUYER_STATE"].isin(["MS", "MT", "CT"])]
 texas_compare["Compare"] = "Control Group"
 dftx["Compare"] = "Texas"
 # texas_compare['BUYER_STATE'].unique()
