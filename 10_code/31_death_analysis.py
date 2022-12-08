@@ -168,7 +168,7 @@ g = (
     + geom_vline(xintercept=0, linetype="dashed")
     + geom_text(x=-0.7, y=7, label="Policy Change", color="black")
     + labs(
-        title="Diff-in-Diff Model Graph, Effective Policy Intervention",
+        title="Diff-in-Diff Model Graph, Policy Intervention",
         color="Counties in State with Policy Change",
     )
     + theme(legend_position="right")
@@ -225,7 +225,7 @@ g = (
     + geom_vline(xintercept=0, linetype="dashed")
     + geom_text(x=-0.7, y=0.3, label="Policy Change", color="black")
     + labs(
-        title="Diff-in-Diff Model Graph, Effective Policy Intervention",
+        title="Diff-in-Diff Model Graph, Policy Intervention",
         color="Counties in State with Policy Change",
     )
     + theme(legend_position="right")
@@ -279,7 +279,7 @@ g = (
     + geom_vline(xintercept=0, linetype="dashed")
     + geom_text(x=-0.5, y=0.3, label="Policy Change", color="black")
     + labs(
-        title="Diff-in-Diff Model Graph, Effective Policy Intervention",
+        title="Diff-in-Diff Model Graph, Policy Intervention",
         color="Counties in State with Policy Change",
     )
     + theme(legend_position="right")

@@ -88,7 +88,7 @@ g_did = (
     + geom_text(x=0, y=0.35, label="Policy Change", color="black")
     + labs(
         y="Monthly opioid per Capita",
-        title="Diff-in-Diff Model Graph, Ineffective Policy Intervention",
+        title="Diff-in-Diff Model Graph, Policy Intervention",
         color="Counties in State with Policy Change",
     )
     + theme(legend_position="right")
