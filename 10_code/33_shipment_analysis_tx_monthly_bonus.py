@@ -3,24 +3,21 @@ import pandas as pd
 import numpy as np
 from plotnine import *
 from warnings import filterwarnings
+import os
+
+# Set working directory as location of current file to use relative paths further on
+dir = os.path.dirname(os.path.abspath(__file__))
 
 ignore = filterwarnings("ignore")
-## Merge the data
-dfm = pd.read_parquet("./opioid_data_woFIPS_monthly.parquet")
-dfm.head()
 
-# For the difference-in-difference analysis, we selected Mississippi, Montana, and Connecticut as states for the control group since these three states have a similar trend in opioid shipments like Texas before the policy was implemented.
-left = dfm[dfm["BUYER_STATE"].isin(["TX", "MS", "MT", "CT"])]
-# left.BUYER_STATE.unique() #check the state
-# Read in the data
-df = pd.read_parquet("./ship_pop_monthly.parquet")
+# Import data
+df = pd.read_parquet(
+    os.path.join(dir, "../20_intermediate_files/ship_pop_monthly.parquet")
+)
 df.head()
-right = df[df["BUYER_STATE"].isin(["TX", "MS", "MT", "CT"])].loc[
-    :, ["year", "BUYER_COUNTY", "BUYER_STATE", "population"]
+df_month = df[df["BUYER_STATE"].isin(["TX", "MS", "MT", "CT"])].loc[
+    :, ["year", "month", "BUYER_COUNTY", "BUYER_STATE", "population"]
 ]
-# right.BUYER_STATE.unique() # check the state
-df_month = pd.merge(left, right, on=["year", "BUYER_COUNTY", "BUYER_STATE"], how="left")
-# After checking the NA in the data set *df_month*, we realize that there exist nan in the population data.
 
 # calculate the opioid per capita - we don't have the data for monthly population, so we just use the yearly one
 df_month["opioid_per_capita"] = df["opioid_converted_grams"] / df["population"]
@@ -45,12 +42,18 @@ g_pp = (
     )
     + geom_vline(xintercept=0, linetype="dashed")
     + geom_text(x=0, y=0.35, label="Policy Change", color="black")
-    + labs(y="Opioid Per Capita", title="Pre-Post Model Graph, Policy Intervention")
+    + labs(
+        y="Monthly opioid per Capita", title="Pre-Post Model Graph, Policy Intervention"
+    )
 )
 print(g_pp)
 # In the left part of the chart the slope is sharper than the right's, which means the opioid converted amount per caipita increased year by year in Texas before January 2007. After the policy became effecive in January 2007, the trend is still increasing, but the gradient is smaller in the right part. Therefore, we may conclude that the policy restricted the opioid converted amount.
 
-# g_pp.save("tx_monthly_prepost_successful.pdf")
+g_pp.save(
+    os.path.join(
+        dir, "../30_results/Bonus_Results/texas_opioid_shipment_prepost_monthly.png"
+    )
+)
 
 ## DID
 # Select the states that we want to use as control group
@@ -84,11 +87,16 @@ g_did = (
     + geom_vline(xintercept=0, linetype="dashed")
     + geom_text(x=0, y=0.35, label="Policy Change", color="black")
     + labs(
-        y="Opioid Per Capita",
+        y="Monthly opioid per Capita",
         title="Diff-in-Diff Model Graph, Ineffective Policy Intervention",
         color="Counties in State with Policy Change",
     )
     + theme(legend_position="right")
 )
 print(g_did)
-# g_did.save("tx_monthly_did_notsure.pdf")
+
+g_did.save(
+    os.path.join(
+        dir, "../30_results/Bonus_Results/texas_opioid_shipment_diffdiff_monthly.png"
+    )
+)
